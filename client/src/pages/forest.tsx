@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { useData } from "@/hooks/use-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
-import { Trees, Leaf, AlertCircle, TrendingUp, Clock, BarChart3 } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { Trees, Leaf, AlertCircle, TrendingUp, Clock, Flower2 } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -13,9 +14,12 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import forestImage from "@assets/2_1769582982463.png";
 
 export default function Forest() {
   const { getCategoryStats, getMonthlyData, sessions, loading } = useData();
+  const [, navigate] = useLocation();
+  const [hoveredArea, setHoveredArea] = useState<string | null>(null);
 
   if (loading) {
     return (
@@ -33,6 +37,14 @@ export default function Forest() {
   const barrenCount = categoryStats.filter((s) => s.status === "barren").length;
   const totalMinutesThisMonth = monthlyData.length > 0 ? monthlyData[monthlyData.length - 1].minutes : 0;
 
+  const handleAreaClick = (area: string) => {
+    if (area === "garden") {
+      navigate("/garden");
+    } else if (area === "plant") {
+      navigate("/plant");
+    }
+  };
+
   return (
     <div className="space-y-6 p-6">
       <div className="flex items-center gap-3">
@@ -44,6 +56,76 @@ export default function Forest() {
           <p className="text-muted-foreground">Your life at a glance</p>
         </div>
       </div>
+
+      <Card className="overflow-hidden">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base">Your Productivity Landscape</CardTitle>
+          <p className="text-sm text-muted-foreground">Click on different areas to explore</p>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="relative" data-testid="interactive-map">
+            <img
+              src={forestImage}
+              alt="Forest Garden Plant landscape"
+              className="w-full h-auto"
+              data-testid="img-landscape"
+            />
+            
+            <div
+              className={`absolute cursor-pointer transition-all duration-300 rounded-lg ${
+                hoveredArea === "forest" ? "bg-primary/20 ring-2 ring-primary" : ""
+              }`}
+              style={{ top: "5%", left: "30%", width: "40%", height: "35%" }}
+              onMouseEnter={() => setHoveredArea("forest")}
+              onMouseLeave={() => setHoveredArea(null)}
+              data-testid="area-forest"
+            >
+              {hoveredArea === "forest" && (
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-lg border flex items-center gap-2">
+                  <Trees className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-medium">Forest - Overview</span>
+                </div>
+              )}
+            </div>
+            
+            <div
+              className={`absolute cursor-pointer transition-all duration-300 rounded-lg ${
+                hoveredArea === "garden" ? "bg-pink-500/20 ring-2 ring-pink-500" : ""
+              }`}
+              style={{ top: "25%", left: "5%", width: "35%", height: "45%" }}
+              onClick={() => handleAreaClick("garden")}
+              onMouseEnter={() => setHoveredArea("garden")}
+              onMouseLeave={() => setHoveredArea(null)}
+              data-testid="area-garden"
+            >
+              {hoveredArea === "garden" && (
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-lg border flex items-center gap-2">
+                  <Flower2 className="h-4 w-4 text-pink-500" />
+                  <span className="text-sm font-medium">Garden - Categories</span>
+                </div>
+              )}
+            </div>
+            
+            <div
+              className={`absolute cursor-pointer transition-all duration-300 rounded-lg ${
+                hoveredArea === "plant" ? "bg-emerald-500/20 ring-2 ring-emerald-500" : ""
+              }`}
+              style={{ top: "40%", left: "50%", width: "45%", height: "55%" }}
+              onClick={() => handleAreaClick("plant")}
+              onMouseEnter={() => setHoveredArea("plant")}
+              onMouseLeave={() => setHoveredArea(null)}
+              data-testid="area-plant"
+            >
+              {hoveredArea === "plant" && (
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-lg border flex items-center gap-2">
+                  <Leaf className="h-4 w-4 text-emerald-500" />
+                  <span className="text-sm font-medium">Plant - Sessions</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
