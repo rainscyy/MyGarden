@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT MODE */
+/* LIGHT MODE - Soft mint/sage green plant app vibe */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);
@@ -14,45 +14,61 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: 85 25% 97%;
-  --foreground: 150 20% 15%;
-  --border: 120 15% 85%;
-  --card: 0 0% 100%;
-  --card-foreground: 150 20% 15%;
-  --card-border: 120 15% 88%;
-  --sidebar: 120 20% 96%;
-  --sidebar-foreground: 150 20% 20%;
-  --sidebar-border: 120 15% 85%;
-  --sidebar-primary: 142 70% 35%;
+  /* Soft mint/sage background like reference images */
+  --background: 158 35% 90%;
+  --foreground: 150 30% 18%;
+  --border: 158 20% 82%;
+  
+  /* Cream/off-white cards like in the reference */
+  --card: 45 30% 97%;
+  --card-foreground: 150 30% 18%;
+  --card-border: 45 15% 88%;
+  
+  /* Sidebar with subtle sage tone */
+  --sidebar: 158 30% 93%;
+  --sidebar-foreground: 150 30% 20%;
+  --sidebar-border: 158 20% 82%;
+  --sidebar-primary: 152 65% 32%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 142 50% 92%;
-  --sidebar-accent-foreground: 142 70% 25%;
-  --sidebar-ring: 142 70% 45%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 150 20% 15%;
-  --popover-border: 120 15% 85%;
-  --primary: 142 70% 35%;
+  --sidebar-accent: 152 40% 88%;
+  --sidebar-accent-foreground: 152 65% 25%;
+  --sidebar-ring: 152 65% 40%;
+  
+  --popover: 45 30% 97%;
+  --popover-foreground: 150 30% 18%;
+  --popover-border: 158 20% 82%;
+  
+  /* Dark forest green primary like the buttons in reference */
+  --primary: 152 65% 32%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 85 30% 92%;
-  --secondary-foreground: 150 25% 25%;
-  --muted: 85 20% 94%;
-  --muted-foreground: 150 10% 45%;
-  --accent: 142 50% 92%;
-  --accent-foreground: 142 70% 25%;
+  
+  /* Soft sage secondary */
+  --secondary: 158 25% 90%;
+  --secondary-foreground: 150 30% 25%;
+  
+  --muted: 158 20% 92%;
+  --muted-foreground: 150 15% 45%;
+  
+  /* Light mint accent */
+  --accent: 152 35% 88%;
+  --accent-foreground: 152 65% 25%;
+  
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
-  --input: 120 15% 80%;
-  --ring: 142 70% 45%;
-  --chart-1: 142 70% 45%;
-  --chart-2: 85 60% 50%;
-  --chart-3: 45 85% 55%;
-  --chart-4: 200 70% 50%;
-  --chart-5: 280 60% 55%;
+  --input: 158 20% 80%;
+  --ring: 152 65% 40%;
+  
+  /* Chart colors with nature palette */
+  --chart-1: 152 65% 40%;
+  --chart-2: 85 55% 50%;
+  --chart-3: 45 80% 55%;
+  --chart-4: 175 60% 45%;
+  --chart-5: 120 45% 50%;
 
   --font-sans: 'Inter', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
-  --radius: .5rem;
+  --radius: .75rem;
   --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.03);
   --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.05);
   --shadow-sm: 0px 2px 4px -1px rgba(0,0,0,0.06);
@@ -95,6 +111,7 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
+/* DARK MODE - Deep forest green theme */
 .dark {
   --button-outline: rgba(255,255,255, .10);
   --badge-outline: rgba(255,255,255, .05);
@@ -105,40 +122,52 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: 160 20% 8%;
-  --foreground: 85 20% 92%;
-  --border: 150 15% 20%;
-  --card: 160 18% 12%;
-  --card-foreground: 85 20% 92%;
-  --card-border: 150 15% 18%;
-  --sidebar: 160 20% 10%;
-  --sidebar-foreground: 85 15% 85%;
-  --sidebar-border: 150 15% 18%;
-  --sidebar-primary: 142 60% 45%;
+  /* Deep forest background */
+  --background: 155 25% 10%;
+  --foreground: 150 15% 90%;
+  --border: 155 20% 20%;
+  
+  /* Dark sage cards */
+  --card: 155 22% 14%;
+  --card-foreground: 150 15% 90%;
+  --card-border: 155 18% 20%;
+  
+  --sidebar: 155 25% 12%;
+  --sidebar-foreground: 150 12% 85%;
+  --sidebar-border: 155 18% 18%;
+  --sidebar-primary: 152 55% 45%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 142 40% 18%;
-  --sidebar-accent-foreground: 142 60% 75%;
-  --sidebar-ring: 142 60% 45%;
-  --popover: 160 18% 12%;
-  --popover-foreground: 85 20% 92%;
-  --popover-border: 150 15% 20%;
-  --primary: 142 60% 45%;
+  --sidebar-accent: 152 35% 20%;
+  --sidebar-accent-foreground: 152 50% 75%;
+  --sidebar-ring: 152 55% 45%;
+  
+  --popover: 155 22% 14%;
+  --popover-foreground: 150 15% 90%;
+  --popover-border: 155 20% 20%;
+  
+  /* Brighter green primary for dark mode */
+  --primary: 152 55% 45%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 150 20% 18%;
-  --secondary-foreground: 85 15% 80%;
-  --muted: 150 15% 15%;
-  --muted-foreground: 150 10% 55%;
-  --accent: 142 40% 18%;
-  --accent-foreground: 142 60% 75%;
+  
+  --secondary: 155 20% 18%;
+  --secondary-foreground: 150 12% 80%;
+  
+  --muted: 155 18% 16%;
+  --muted-foreground: 155 12% 55%;
+  
+  --accent: 152 30% 22%;
+  --accent-foreground: 152 50% 75%;
+  
   --destructive: 0 65% 50%;
   --destructive-foreground: 0 0% 100%;
-  --input: 150 15% 25%;
-  --ring: 142 60% 45%;
-  --chart-1: 142 60% 50%;
-  --chart-2: 85 50% 55%;
-  --chart-3: 45 80% 60%;
-  --chart-4: 200 65% 55%;
-  --chart-5: 280 55% 60%;
+  --input: 155 18% 25%;
+  --ring: 152 55% 45%;
+  
+  --chart-1: 152 55% 50%;
+  --chart-2: 85 45% 55%;
+  --chart-3: 45 75% 60%;
+  --chart-4: 175 55% 50%;
+  --chart-5: 120 40% 55%;
 
   --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.2);
   --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.25);
