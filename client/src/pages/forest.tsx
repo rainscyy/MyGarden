@@ -16,10 +16,22 @@ import {
 } from "recharts";
 import forestImage from "@assets/2_1769582982463.png";
 
+const CATEGORY_POSITIONS = [
+  { top: "55%", left: "52%", width: "12%", height: "14%" },
+  { top: "55%", left: "66%", width: "12%", height: "14%" },
+  { top: "55%", left: "80%", width: "12%", height: "14%" },
+  { top: "70%", left: "52%", width: "12%", height: "14%" },
+  { top: "70%", left: "66%", width: "12%", height: "14%" },
+  { top: "70%", left: "80%", width: "12%", height: "14%" },
+  { top: "85%", left: "52%", width: "12%", height: "12%" },
+  { top: "85%", left: "66%", width: "12%", height: "12%" },
+  { top: "85%", left: "80%", width: "12%", height: "12%" },
+];
+
 export default function Forest() {
   const { getCategoryStats, getMonthlyData, sessions, loading } = useData();
   const [, navigate] = useLocation();
-  const [hoveredArea, setHoveredArea] = useState<string | null>(null);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
 
   if (loading) {
     return (
@@ -37,12 +49,8 @@ export default function Forest() {
   const barrenCount = categoryStats.filter((s) => s.status === "barren").length;
   const totalMinutesThisMonth = monthlyData.length > 0 ? monthlyData[monthlyData.length - 1].minutes : 0;
 
-  const handleAreaClick = (area: string) => {
-    if (area === "garden") {
-      navigate("/garden");
-    } else if (area === "plant") {
-      navigate("/plant");
-    }
+  const handleCategoryClick = (categoryId: string) => {
+    navigate(`/plant?category=${categoryId}`);
   };
 
   return (
@@ -56,76 +64,6 @@ export default function Forest() {
           <p className="text-muted-foreground">Your life at a glance</p>
         </div>
       </div>
-
-      <Card className="overflow-hidden">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-base">Your Productivity Landscape</CardTitle>
-          <p className="text-sm text-muted-foreground">Click on different areas to explore</p>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="relative" data-testid="interactive-map">
-            <img
-              src={forestImage}
-              alt="Forest Garden Plant landscape"
-              className="w-full h-auto"
-              data-testid="img-landscape"
-            />
-            
-            <div
-              className={`absolute cursor-pointer transition-all duration-300 rounded-lg ${
-                hoveredArea === "forest" ? "bg-primary/20 ring-2 ring-primary" : ""
-              }`}
-              style={{ top: "5%", left: "30%", width: "40%", height: "35%" }}
-              onMouseEnter={() => setHoveredArea("forest")}
-              onMouseLeave={() => setHoveredArea(null)}
-              data-testid="area-forest"
-            >
-              {hoveredArea === "forest" && (
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-lg border flex items-center gap-2">
-                  <Trees className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-medium">Forest - Overview</span>
-                </div>
-              )}
-            </div>
-            
-            <div
-              className={`absolute cursor-pointer transition-all duration-300 rounded-lg ${
-                hoveredArea === "garden" ? "bg-pink-500/20 ring-2 ring-pink-500" : ""
-              }`}
-              style={{ top: "25%", left: "5%", width: "35%", height: "45%" }}
-              onClick={() => handleAreaClick("garden")}
-              onMouseEnter={() => setHoveredArea("garden")}
-              onMouseLeave={() => setHoveredArea(null)}
-              data-testid="area-garden"
-            >
-              {hoveredArea === "garden" && (
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-lg border flex items-center gap-2">
-                  <Flower2 className="h-4 w-4 text-pink-500" />
-                  <span className="text-sm font-medium">Garden - Categories</span>
-                </div>
-              )}
-            </div>
-            
-            <div
-              className={`absolute cursor-pointer transition-all duration-300 rounded-lg ${
-                hoveredArea === "plant" ? "bg-emerald-500/20 ring-2 ring-emerald-500" : ""
-              }`}
-              style={{ top: "40%", left: "50%", width: "45%", height: "55%" }}
-              onClick={() => handleAreaClick("plant")}
-              onMouseEnter={() => setHoveredArea("plant")}
-              onMouseLeave={() => setHoveredArea(null)}
-              data-testid="area-plant"
-            >
-              {hoveredArea === "plant" && (
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-lg border flex items-center gap-2">
-                  <Leaf className="h-4 w-4 text-emerald-500" />
-                  <span className="text-sm font-medium">Plant - Sessions</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
@@ -159,6 +97,76 @@ export default function Forest() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="overflow-hidden">
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Flower2 className="h-5 w-5" />
+            Your Productivity Garden
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">Hover over the plots to see your categories</p>
+        </CardHeader>
+        <CardContent className="flex justify-center py-4">
+          <div className="relative w-full max-w-md" data-testid="interactive-map">
+            <img
+              src={forestImage}
+              alt="Forest Garden Plant landscape"
+              className="w-full h-auto rounded-lg"
+              data-testid="img-landscape"
+            />
+            
+            {categoryStats.slice(0, CATEGORY_POSITIONS.length).map((stat, index) => {
+              const pos = CATEGORY_POSITIONS[index];
+              const isHovered = hoveredCategory === stat.category.id;
+              
+              return (
+                <div
+                  key={stat.category.id}
+                  className={`absolute cursor-pointer transition-all duration-200 rounded ${
+                    isHovered ? "ring-2 shadow-lg" : ""
+                  }`}
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    width: pos.width,
+                    height: pos.height,
+                    backgroundColor: isHovered ? `${stat.category.color}40` : "transparent",
+                    borderColor: stat.category.color,
+                    boxShadow: isHovered ? `0 0 12px ${stat.category.color}60` : "none",
+                  }}
+                  onClick={() => handleCategoryClick(stat.category.id)}
+                  onMouseEnter={() => setHoveredCategory(stat.category.id)}
+                  onMouseLeave={() => setHoveredCategory(null)}
+                  data-testid={`area-category-${stat.category.id}`}
+                >
+                  {isHovered && (
+                    <div 
+                      className="absolute -top-12 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-2 rounded-md shadow-lg border whitespace-nowrap z-10"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div 
+                          className="h-3 w-3 rounded-full" 
+                          style={{ backgroundColor: stat.category.color }}
+                        />
+                        <span className="text-sm font-medium">{stat.category.name}</span>
+                        <Badge 
+                          variant={stat.status === "healthy" ? "default" : "destructive"} 
+                          className="text-xs"
+                        >
+                          {stat.status}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {stat.totalMinutes} min · {stat.doneCount} done
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
