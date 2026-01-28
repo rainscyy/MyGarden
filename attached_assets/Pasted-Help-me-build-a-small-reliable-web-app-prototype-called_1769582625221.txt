@@ -1,0 +1,67 @@
+Help me build a small, reliable web app prototype called “Forest Garden Plant” (a 3-tier productivity tracker).
+
+Goal:
+Create a working MVP that visualizes productivity with a simple 3-tier metaphor:
+- Tier 1: Forest = life overview dashboard
+- Tier 2: Garden = categories/projects
+- Tier 3: Plant = individual tasks / focus sessions
+
+IMPORTANT: Keep it simple and fully runnable.
+Do NOT implement payments, real-world seed exchange, external integrations, or complex animations.
+No PDF parsing, no scraping. Use only local data.
+
+Core features (must-have):
+1) Navigation with 3 main pages:
+   - Forest (Overview)
+   - Garden (Categories)
+   - Plant (Tasks / Focus)
+
+2) Data model (simple, in local storage):
+   - Category (Garden): { id, name, color(optional) }
+   - Task/Session (Plant): { id, categoryId, title, minutesFocused, status: "done" | "failed", dateISO }
+
+3) Plant page (Atomic):
+   - Form to add a task/session:
+     - title
+     - category selector
+     - minutesFocused (number)
+     - status (done/failed)
+     - date (default today)
+   - A list of sessions with filters:
+     - by category
+     - by status
+   - On “save”, update local storage and show a toast/notification.
+
+4) Garden page (Categorical):
+   - Create/edit/delete categories
+   - Show simple stats per category:
+     - total minutes (last 7 days)
+     - count of done vs failed sessions
+   - Clicking a category navigates to Plant page filtered to that category.
+
+5) Forest page (Macro overview):
+   - “System status” blocks for a few life dimensions (use categories as dimensions):
+     - If a category has no activity in the last 7 days, mark it as “barren”
+     - Otherwise mark it as “healthy”
+   - Monthly Focus Summary:
+     - A simple bar chart for the last 6 months showing total minutes focused per month.
+     - Use the stored sessions to compute totals.
+     - If there is no data, display a friendly empty state with a button to add a session.
+
+Design:
+- Minimal, clean UI (student-friendly)
+- Use simple iconography (optional)
+- No fancy animations; only small transitions are fine.
+
+MVP constraints:
+- Use local storage only (no database required).
+- Use mock seed data on first load (2 categories + a few sessions) so the charts aren’t empty.
+- Ensure the app never crashes on first render: always use safe defaults (empty arrays).
+
+Deliverable:
+A working prototype where I can:
+- Add sessions in Plant
+- See category stats in Garden
+- See barren/healthy status + 6-month bar chart in Forest
+
+Start by building the MVP end-to-end first, then lightly polish UI.
