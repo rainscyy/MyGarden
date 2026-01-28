@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
 import { Flower2, Plus, Pencil, Trash2, Clock, CheckCircle, XCircle } from "lucide-react";
 import type { Category } from "@shared/schema";
+import gardenImage from "@assets/image_1769584073562.png";
 
 const PRESET_COLORS = [
   "#22c55e", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6",
@@ -138,6 +139,17 @@ export default function Garden() {
           </DialogContent>
         </Dialog>
       </div>
+
+      <Card className="overflow-hidden">
+        <CardContent className="flex justify-center p-4">
+          <img
+            src={gardenImage}
+            alt="Academic Garden illustration"
+            className="w-full max-w-sm h-auto rounded-lg"
+            data-testid="img-garden-hero"
+          />
+        </CardContent>
+      </Card>
 
       {categories.length === 0 ? (
         <Card>
