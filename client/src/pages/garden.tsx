@@ -13,10 +13,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Flower2, Plus, Pencil, Trash2, Clock, CheckCircle, XCircle } from "lucide-react";
 import type { Category } from "@shared/schema";
 import gardenImage from "@assets/image_1769584073562.png";
+
+const IMAGE_HOTSPOTS = [
+  { id: "workflow", label: "Establish Workflow", progress: 70, top: "62%", left: "8%", width: "28%", height: "10%" },
+  { id: "visual", label: "Design Visual Screens", progress: 45, top: "48%", left: "30%", width: "28%", height: "10%" },
+  { id: "reference", label: "Find Reference Images", progress: 100, top: "62%", left: "52%", width: "28%", height: "10%" },
+];
 
 const PRESET_COLORS = [
   "#22c55e", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6",
@@ -26,10 +32,12 @@ const PRESET_COLORS = [
 export default function Garden() {
   const { categories, getCategoryStats, addCategory, updateCategory, deleteCategory, loading } = useData();
   const { toast } = useToast();
+  const [, navigate] = useLocation();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formName, setFormName] = useState("");
   const [formColor, setFormColor] = useState(PRESET_COLORS[0]);
+  const [hoveredSpot, setHoveredSpot] = useState<string | null>(null);
 
   const categoryStats = getCategoryStats();
 
@@ -142,12 +150,49 @@ export default function Garden() {
 
       <Card className="overflow-hidden">
         <CardContent className="flex justify-center p-4">
-          <img
-            src={gardenImage}
-            alt="Academic Garden illustration"
-            className="w-full max-w-sm h-auto rounded-lg"
-            data-testid="img-garden-hero"
-          />
+          <div className="relative w-full max-w-sm" data-testid="interactive-garden-map">
+            <img
+              src={gardenImage}
+              alt="Academic Garden illustration"
+              className="w-full h-auto rounded-lg"
+              data-testid="img-garden-hero"
+            />
+            
+            {IMAGE_HOTSPOTS.map((spot) => {
+              const isHovered = hoveredSpot === spot.id;
+              return (
+                <div
+                  key={spot.id}
+                  className={`absolute cursor-pointer transition-all duration-200 rounded ${
+                    isHovered ? "ring-2 ring-primary shadow-lg" : ""
+                  }`}
+                  style={{
+                    top: spot.top,
+                    left: spot.left,
+                    width: spot.width,
+                    height: spot.height,
+                    backgroundColor: isHovered ? "rgba(61, 139, 95, 0.3)" : "transparent",
+                  }}
+                  onMouseEnter={() => setHoveredSpot(spot.id)}
+                  onMouseLeave={() => setHoveredSpot(null)}
+                  data-testid={`hotspot-${spot.id}`}
+                >
+                  {isHovered && (
+                    <div className="absolute -top-16 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-sm px-3 py-2 rounded-md shadow-lg border whitespace-nowrap z-10 min-w-[140px]">
+                      <div className="text-sm font-medium text-center mb-1">{spot.label}</div>
+                      <div className="h-2 bg-muted rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-primary rounded-full transition-all"
+                          style={{ width: `${spot.progress}%` }}
+                        />
+                      </div>
+                      <div className="text-xs text-muted-foreground text-center mt-1">{spot.progress}% complete</div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </CardContent>
       </Card>
 

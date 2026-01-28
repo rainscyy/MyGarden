@@ -20,7 +20,7 @@
   --border: 158 20% 82%;
   
   /* Cream/off-white cards like in the reference */
-  --card: 45 30% 97%;
+  --card: 133.33deg 100% 98.24%;
   --card-foreground: 150 30% 18%;
   --card-border: 45 15% 88%;
   
@@ -39,7 +39,7 @@
   --popover-border: 158 20% 82%;
   
   /* Dark forest green primary like the buttons in reference */
-  --primary: 152 65% 32%;
+  --primary: 135.25deg 24.28% 52.35%;
   --primary-foreground: 0 0% 100%;
   
   /* Soft sage secondary */
@@ -59,16 +59,16 @@
   --ring: 152 65% 40%;
   
   /* Chart colors with nature palette */
-  --chart-1: 152 65% 40%;
+  --chart-1: 164.12deg 22.08% 69.8%;
   --chart-2: 85 55% 50%;
   --chart-3: 45 80% 55%;
   --chart-4: 175 60% 45%;
   --chart-5: 120 45% 50%;
 
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Menlo, monospace;
-  --radius: .75rem;
+  --font-sans: 'Oxanium', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-mono: 'Inter', sans-serif;
+  --radius: 1rem;
   --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.03);
   --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.05);
   --shadow-sm: 0px 2px 4px -1px rgba(0,0,0,0.06);
@@ -83,31 +83,31 @@
   /* Automatically computed borders - intensity can be controlled by the user by the --opaque-button-border-intensity setting */
 
   /* Fallback for older browsers */
-  --sidebar-primary-border: hsl(var(--sidebar-primary));
+  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 
   /* Fallback for older browsers */
-  --sidebar-accent-border: hsl(var(--sidebar-accent));
+  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 
   /* Fallback for older browsers */
-  --primary-border: hsl(var(--primary));
+  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 
   /* Fallback for older browsers */
-  --secondary-border: hsl(var(--secondary));
+  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 
   /* Fallback for older browsers */
-  --muted-border: hsl(var(--muted));
+  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 
   /* Fallback for older browsers */
-  --accent-border: hsl(var(--accent));
+  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 
   /* Fallback for older browsers */
-  --destructive-border: hsl(var(--destructive));
+  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
